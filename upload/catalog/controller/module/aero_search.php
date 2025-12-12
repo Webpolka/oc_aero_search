@@ -36,89 +36,26 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 
 
     /*
-    * Universal language ID  (RU, EN, FR)
+    * Universal language ID  
     */
-    private function resolveLanguageId(): int
+   private function resolveLanguageId(): int
     {
-
         // Получаем сырой код из запроса
-        $raw = $this->request->get['language']
-            ?? $this->request->get['lang']
-            ?? '';
-
-        $raw = trim(strtolower((string)$raw));
-        $raw = str_replace('_', '-', $raw);
-
-        // Лог
-        // $this->log_data("resolveLanguageId: raw input = {$raw}");
-
-        // Карта простых преобразований
-        $map = [
-            // 🇷🇺 Русский
-            'ru'        => 'ru-ru',
-            'ru-ru'     => 'ru-ru',
-            'ru_ru'     => 'ru-ru',
-            'russian'   => 'ru-ru',
-
-            // 🇬🇧 Английский
-            'en'        => 'en-gb',
-            'en-gb'     => 'en-gb',
-            'en_us'     => 'en-gb',
-            'en-us'     => 'en-gb',
-            'gb'        => 'en-gb',
-            'english'   => 'en-gb',
-
-            // 🇫🇷 Французский
-            'fr'        => 'fr-fr',
-            'fr-fr'     => 'fr-fr',
-            'fr_ca'     => 'fr-fr',
-            'french'    => 'fr-fr',
-        ];
-
-
-        // Если пришёл короткий код, переписываем
-        if (isset($map[$raw])) {
-            $normalized = $map[$raw];
-        } else {
-            // fallback по первым двум символам
-            $short = substr($raw, 0, 2);
-            $normalized = $map[$short] ?? '';
-        }
-
-        // Если так и не получили код — берём из конфига
-        if (!$normalized) {
-            $normalized = strtolower(str_replace('_', '-', $this->config->get('config_language')));
-        }
-
-        // $this->log_data("resolveLanguageId: normalized = {$normalized}");
-
+        $code = $this->request->get['language'];
+           
         // Загружаем список языков
         $this->load->model('localisation/language');
         $languages = $this->model_localisation_language->getLanguages();
 
         // Пытаемся найти по ключу массива
-        if (isset($languages[$normalized]['language_id'])) {
-            return (int)$languages[$normalized]['language_id'];
+        if (isset($languages[$code]['language_id'])) {
+            return (int)$languages[$code]['language_id'];
         }
-
-        // Пытаемся найти по полю code
-        foreach ($languages as $key => $lang) {
-            if (!isset($lang['code']) || !isset($lang['language_id'])) continue;
-
-            // Полное совпадение
-            if (strtolower($lang['code']) === $normalized) {
-                return (int)$lang['language_id'];
-            }
-
-            // Совпадение по двум буквам
-            if (substr(strtolower($lang['code']), 0, 2) === substr($normalized, 0, 2)) {
-                return (int)$lang['language_id'];
-            }
-        }
-
+     
         // Если уж вообще не нашли — ставим язык по умолчанию
         return 1;
     }
+
 
     /*
     *  Aero Search Method
@@ -170,12 +107,9 @@ class AeroSearch extends \Opencart\System\Engine\Controller
             if (isset($search) && strlen($search) >= ($settings['module_aero_search_min_length'] ?? 1)) {
 
                 $this->load->model('tool/image');
-                $this->load->model('catalog/product');
-                $this->load->model('extension/aero_search/module/aero_search');
+                $this->load->model('catalog/product');    
 
                 $language_id = $this->resolveLanguageId();
-
-                $this->log_data($language_id);
 
                 // Добавляем language_id в фильтры
                 $filter_data = [
@@ -193,9 +127,8 @@ class AeroSearch extends \Opencart\System\Engine\Controller
                     'language_id'          => $language_id
                 ];
 
-                // Получаем продукты с учетом языка
-                $results = $this->model_extension_aero_search_module_aero_search->getProducts($filter_data);
-
+                // Получаем продукты с учетом языка                
+                $results = $this->model_catalog_product->getProducts($filter_data);
                 $search_result = $this->model_catalog_product->getTotalProducts($filter_data);
                 $image_width        = $this->config->get('module_aero_search_image_width') ? (int)$this->config->get('module_aero_search_image_width') : 0;
                 $image_height       = $this->config->get('module_aero_search_image_height') ? (int)$this->config->get('module_aero_search_image_height') : 0;
