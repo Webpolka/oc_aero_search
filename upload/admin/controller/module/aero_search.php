@@ -29,10 +29,18 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 				'sort_order' => 0
 			],
 			[
-				'code'        => 'aero_search_header_after',
-				'description' => 'Inject Aero Search styles and scripts after header',
-				'trigger'     => 'catalog/controller/common/header/after',
-				'action'      => 'extension/aero_search/event/aero_search.headerAfter',
+				'code'        => 'aero_search_header_before',
+				'description' => 'вывод стилей в хедере headerBefore',
+				'trigger'     => 'catalog/controller/common/header/before',
+				'action'      => 'extension/aero_search/event/aero_search.headerBefore',
+				'status'      => 1,
+				'sort_order'  => 0
+			],
+			[
+				'code'        => 'aero_search_footer_after',
+				'description' => 'вывод скриптов в футере footer after',
+				'trigger'     => 'catalog/controller/common/footer/after',
+				'action'      => 'extension/aero_search/event/aero_search.footerAfter',
 				'status'      => 1,
 				'sort_order'  => 0
 			]
@@ -84,7 +92,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 		$this->load->model('setting/event');
 		$this->load->model('setting/setting');
 
-		foreach (['aero_search_header_after', 'aero_search_admin'] as $code) {
+		foreach (['aero_search_header_before', 'aero_search_footer_after', 'aero_search_admin'] as $code) {
 			$this->model_setting_event->deleteEventByCode($code);
 		}
 

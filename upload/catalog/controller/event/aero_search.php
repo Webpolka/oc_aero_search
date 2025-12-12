@@ -4,7 +4,17 @@ namespace Opencart\Catalog\Controller\Extension\AeroSearch\Event;
 
 class AeroSearch extends \Opencart\System\Engine\Controller
 {
-    public function headerAfter(&$route, $args, &$output): void
+
+       public function headerBefore(string &$route, array &$args): void
+    {
+        // Добавляем CSS-файл в массив $args, если он передан
+        // Но чаще в header можно напрямую использовать document
+        $this->document->addStyle('extension/aero_search/catalog/view/stylesheet/aero_search.css');
+        $this->document->addStyle('extension/aero_search/catalog/view/stylesheet/addon.css');
+    }
+
+
+    public function footerAfter(&$route, $args, &$output): void
     {
         if ($this->config->get('module_aero_search_status')) {
 
@@ -32,11 +42,10 @@ class AeroSearch extends \Opencart\System\Engine\Controller
                 'module_aero_search_show_description' => $this->config->get('module_aero_search_show_description'),
                 'module_aero_search_min_length'       => $this->config->get('module_aero_search_min_length'),
                 'module_aero_search_show_add_button'  => $this->config->get('module_aero_search_show_add_button'),
+                'module_aero_search_language_id'      => $this->config->get('config_language_id')
             ];
-
-            $aeroSearchOutput = '<link href="extension/aero_search/catalog/view/stylesheet/aero_search.css" rel="stylesheet" type="text/css">' . "\n";
-            $aeroSearchOutput .= '<link href="extension/aero_search/catalog/view/stylesheet/addon.css" rel="stylesheet" type="text/css">' . "\n";
-            $aeroSearchOutput .= '<script src="extension/aero_search/catalog/view/javascript/aero_search.js"></script>' . "\n";
+            
+            $aeroSearchOutput = '<script src="extension/aero_search/catalog/view/javascript/aero_search.js"></script>' . "\n";
             $aeroSearchOutput .= '<script type="text/javascript">' . "\n";
             $aeroSearchOutput .= '$(document).ready(function() {' . "\n";
             $aeroSearchOutput .= 'const options = ' . json_encode($aeroSearchOptions) . ';' . "\n";
@@ -44,7 +53,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
             $aeroSearchOutput .= '});' . "\n";
             $aeroSearchOutput .= '//</script>';
 
-            $output = str_replace('</head>',  $aeroSearchOutput . '</head>', $output);
+            $output = str_replace('</body>',  $aeroSearchOutput . '</body>', $output);
         }
     }
 }

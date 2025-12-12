@@ -87,7 +87,7 @@ function renderAeroRating(rating) {
 </svg>
 `;
 
-  let html = '';
+  let html = "";
 
   for (let i = 1; i <= 5; i++) {
     html += i <= rating ? StarFilled : StarEmpty;
@@ -95,6 +95,7 @@ function renderAeroRating(rating) {
 
   return html;
 }
+
 
 // Aero search function
 const AeroSearch = (function () {
@@ -126,16 +127,17 @@ const AeroSearch = (function () {
               aero_search_href +
               encodeURIComponent(filter_name) +
               "&cat_id=" +
-              Math.abs(cat_id);
+              Math.abs(cat_id) + '&language=' + document.documentElement.lang;
             all_search_href =
-              all_search_href +
+              all_search_href + 
               encodeURIComponent(filter_name) +
               "&category_id=" +
-              Math.abs(cat_id);
+              Math.abs(cat_id)+ '&language=' + document.documentElement.lang;             
           } else {
             aero_search_href =
-              aero_search_href + encodeURIComponent(filter_name);
-            all_search_href = all_search_href + encodeURIComponent(filter_name);
+              aero_search_href + encodeURIComponent(filter_name) + '&language=' + document.documentElement.lang;
+            all_search_href = all_search_href + encodeURIComponent(filter_name) + '&language=' + document.documentElement.lang;
+
           }
 
           let html = "<li>";
@@ -194,13 +196,19 @@ const AeroSearch = (function () {
                   html += '<div class="product-main">';
 
                   html += '<div class="product-main-top">';
-                  html += '<span class="product-main-name">' + product.name + '</span>';
-                  html += '<span class="product-main-stars">' + renderAeroRating(product.rating) + '</span>';
+                  html +=
+                    '<span class="product-main-name">' +
+                    product.name +
+                    "</span>";
+                  html +=
+                    '<span class="product-main-stars">' +
+                    renderAeroRating(product.rating) +
+                    "</span>";
                   html += "</div>";
 
                   if (show_description == 1) {
                     html += "<p>" + product.extra_info + "</p>";
-                                    }
+                  }
                   html += "</div>";
 
                   html += "</a>";
