@@ -27,6 +27,8 @@ $_['entry_show_add_button']    = 'Show addToCart link';
 $_['entry_status']             = 'Status';
 $_['entry_view_all_results']   = 'Text for button: "Show all results" ';
 $_['entry_min_length']   	   = 'Search Min Length';
+$_['entry_show_rating']   	   = 'Show rating';
+
 
 // Help
 $_['help_length']              = 'Show \'...\' when length over this.';

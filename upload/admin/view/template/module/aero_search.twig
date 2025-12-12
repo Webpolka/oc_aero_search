@@ -94,6 +94,17 @@
 						</div>
 					</div>
 
+						<!-- show_rating -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-show-rating">{{ entry_show_rating }}</label>
+						<div class="col-sm-10">
+							<select name="module_aero_search_rating" id="input-show-rating" class="form-select">
+								<option value="1" {% if module_aero_search_rating %} selected {% endif %}>{{ text_enabled }}</option>
+								<option value="0" {% if not module_aero_search_rating %} selected {% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+
 					<!-- view_all_results (multi-language) -->
 					<div class="mb-3 row">
 						<label class="col-sm-2 col-form-label">

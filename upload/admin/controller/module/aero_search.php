@@ -10,8 +10,8 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 	 * Install
 	 */
 	public function install(): void
-	{		
-		$this->load->model('extension/aero_search/module/aero_search');		
+	{
+		$this->load->model('extension/aero_search/module/aero_search');
 		$this->load->model('localisation/language');
 		$this->load->model('setting/event');
 		$this->load->model('setting/setting');
@@ -20,6 +20,14 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 
 		// Регистрация событий
 		$events = [
+			[
+				'code' => 'aero_search_admin',
+				'description' => 'Add Aero Search to admin sidebar',
+				'trigger' => 'admin/view/common/column_left/before',
+				'action' => 'extension/aero_search/event/aero_search',
+				'status' => 1,
+				'sort_order' => 0
+			],
 			[
 				'code'        => 'aero_search_header_after',
 				'description' => 'Inject Aero Search styles and scripts after header',
@@ -41,9 +49,8 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 		$default_view_all_results = [];
 		foreach ($languages as $lang) {
 			$default_view_all_results['module_aero_search_view_all_results_' . $lang['language_id']] = json_encode([
-				'name' => $this->language->get('text_view_all_results_'. $lang['language_id'])
+				'name' => $this->language->get('text_view_all_results_' . $lang['language_id'])
 			], JSON_UNESCAPED_UNICODE);
-			
 		}
 
 		$defaults = [
@@ -57,6 +64,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 			'module_aero_search_title_length'       => 100,
 			'module_aero_search_description_length' => 100,
 			'module_aero_search_min_length'         => 1,
+			'module_aero_search_rating'             => 0,
 			'module_aero_search_status'             => 0
 		];
 
@@ -64,9 +72,8 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 		$settings = array_merge($defaults, $default_view_all_results);
 
 		// Сохраняем все настройки в базе
-		$this->model_setting_setting->editSetting('module_aero_search', $settings);	
+		$this->model_setting_setting->editSetting('module_aero_search', $settings);
 		$this->model_extension_aero_search_module_aero_search->install();
-		
 	}
 
 	/**
@@ -77,7 +84,10 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 		$this->load->model('setting/event');
 		$this->load->model('setting/setting');
 
-		$this->model_setting_event->deleteEventByCode('aero_search_header_after');	
+		foreach (['aero_search_header_after', 'aero_search_admin'] as $code) {
+			$this->model_setting_event->deleteEventByCode($code);
+		}
+
 		$this->model_setting_setting->deleteSetting('module_aero_search');
 	}
 
@@ -159,7 +169,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 				'name' => $this->language->get('text_view_all_results')
 			];
 		}
-		unset($lang);		
+		unset($lang);
 
 		// Загружаем сохранённые настройки
 		$saved = $this->model_setting_setting->getSetting('module_aero_search');
