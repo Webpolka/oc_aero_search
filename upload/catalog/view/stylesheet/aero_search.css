@@ -2,153 +2,170 @@
 Aero search styles
 ***********************************************************************************************************************************/
 .aero-search {
-	width: 100%;
-	position: absolute;
-	left: 0;
-	margin-top: 40px;
-	padding: 10px 0 40px;
-	z-index: 1000;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  margin-top: 40px;
+  padding: 10px 0 40px;
+  z-index: 1000;
 
-	background: #fff;
-	border: 1px solid #DDD;
-	border-bottom-left-radius: 6px !important;
-	border-bottom-right-radius: 6px !important;
-	box-shadow: 0 2px 4px #DDD;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-bottom-left-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+  box-shadow: 0 2px 4px #ddd;
 
-	display: none;
+  display: none;
 }
 
 .aero-search .loading {
-	display: block;
-	margin: 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .aero-search ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .aero-search ul li {
-	cursor: pointer;
-	padding: 10px;
-	margin: 0 5px;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0 5px;
 
-	background: #FFF;
-	min-height: 60px;
+  background: #fff;
+  min-height: 60px;
 
-	display: flex;
-	align-items: center;
-	gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-	border-radius: 6px;
-	transition: background 0.2s;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .aero-search ul li:nth-child(even) {
-	background: #FAFAFA;
+  background: #fafafa;
 }
 .aero-search ul li:hover {
-	background: #F0F7FA;
+  background: #f0f7fa;
 }
 
 .aero-search ul li a {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	flex: 1;
-	text-decoration: none;
-	color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.aero-search .product-main-stars {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.aero-search .product-main-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 6px;
 }
 
 .aero-search .product-image img {
-	width: 50px;
-	height: 50px;
-	object-fit: cover;
-	border-radius: 4px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  align-self: center;
 }
 
-.aero-search .product-name {
-	font-weight: bold;
-	display: flex;
-	flex-direction: column;
-	flex: 1;
+.aero-search .product-main {
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.aero-search .product-name p {
-	font-weight: normal;
-	font-style: italic;
-	font-size: 11px;
-	color: #555;
-	margin: 2px 0 0;
+.aero-search .product-main p {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 11px;
+  color: #555;
+  margin: 2px 0 0;
 }
 
 .aero-search .product-price {
-	text-align: right;	
-	font-size: 12px;
-	font-weight: bold;
+  text-align: right;
+  font-size: 12px;
+  font-weight: bold;
 
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .aero-search .product-price .price {
-	color: #333;
+  color: #333;
 }
 
 .aero-search .product-price .special {
-	color: #FF0000;
-	text-decoration: line-through;
-	margin-top: 2px;
+  color: #ff0000;
+  text-decoration: line-through;
+  margin-top: 2px;
 }
 
 .aero-search .product-add-cart {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .aero-search .result-text {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 
-	text-align: center;
-	font-weight: bold;
-	font-size: 13px;
-	line-height: 40px;
-	color: #555;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 40px;
+  color: #555;
 
-	background: #e6ffff;
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
+  background: #e6ffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .aero-search .view-all-results {
-	color: #23a1d1;
-	text-decoration: none;
+  color: #23a1d1;
+  text-decoration: none;
 }
 .aero-search .view-all-results:hover {
-	color: #23527c;
+  color: #23527c;
 }
 
 /* Контейнер для кнопки и цены */
 .aero-search ul li .product-action-price {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 10px; /* расстояние между кнопкой и ценой */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px; /* расстояние между кнопкой и ценой */
 }
 
 /* Мобильный вариант: экран < 992px */
 @media (max-width: 992px) {
-	.aero-search ul li .product-action-price {
-		flex-direction: column-reverse; /* кнопка сверху, цена снизу */
-		align-items: flex-start; /* можно left или center */
-		
-		gap: 5px; /* расстояние между кнопкой и ценой */
-	}
-}
+  .aero-search ul li .product-action-price {
+    flex-direction: column-reverse; /* кнопка сверху, цена снизу */
+    align-items: flex-start; /* можно left или center */
 
+    gap: 5px; /* расстояние между кнопкой и ценой */
+  }
+
+  .aero-search ul li a {
+    align-items: start;
+  }
+}
