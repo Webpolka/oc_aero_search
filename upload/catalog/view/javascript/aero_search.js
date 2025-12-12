@@ -1,6 +1,9 @@
 // Card add
 function cartAdd(product_id, quantity, imageSelector) {
-  fetch("index.php?route=checkout/cart.add", {
+
+  const lang = normalizeLanguageCode(document.documentElement.lang);
+
+  fetch("index.php?route=checkout/cart.add&language=" + lang , {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -96,6 +99,37 @@ function renderAeroRating(rating) {
   return html;
 }
 
+// Normalize lang code
+function normalizeLanguageCode(input) {
+  if (!input) return "en-gb";
+
+  const map = {
+    // 🇷🇺 Русский
+    ru: "ru-ru",
+    "ru-ru": "ru-ru",
+    ru_ru: "ru-ru",
+    russian: "ru-ru",
+
+    // 🇬🇧 Английский
+    en: "en-gb",
+    "en-gb": "en-gb",
+    en_us: "en-gb",
+    "en-us": "en-gb",
+    gb: "en-gb",
+    english: "en-gb",
+
+    // 🇫🇷 Французский
+    fr: "fr-fr",
+    "fr-fr": "fr-fr",
+    fr_ca: "fr-fr",
+    french: "fr-fr",
+  };
+
+  const code = String(input).toLowerCase().replace("_", "-");
+
+  return map[code] || "en-gb";
+}
+
 // Aero search function
 const AeroSearch = (function () {
   const init = function (options) {
@@ -110,38 +144,6 @@ const AeroSearch = (function () {
       '<div class="aero-search"><ul></ul><div class="result-text"></div></div>';
     $(aero_search.selector).after(html);
 
-
-    // Normalize lang code
-    function normalizeLanguageCode(input) {
-      if (!input) return "en-gb";
-
-      const map = {
-        // 🇷🇺 Русский
-        ru: "ru-ru",
-        "ru-ru": "ru-ru",
-        ru_ru: "ru-ru",
-        russian: "ru-ru",
-
-        // 🇬🇧 Английский
-        en: "en-gb",
-        "en-gb": "en-gb",
-        en_us: "en-gb",
-        "en-us": "en-gb",
-        gb: "en-gb",
-        english: "en-gb",
-
-        // 🇫🇷 Французский
-        fr: "fr-fr",
-        "fr-fr": "fr-fr",
-        fr_ca: "fr-fr",
-        french: "fr-fr",
-      };
-
-      const code = String(input).toLowerCase().replace("_", "-");
-
-      return map[code] || "en-gb";
-    }
-    
     const lang = normalizeLanguageCode(document.documentElement.lang);
 
     $(aero_search.selector).autocomplete({
@@ -161,22 +163,26 @@ const AeroSearch = (function () {
               encodeURIComponent(filter_name) +
               "&cat_id=" +
               Math.abs(cat_id) +
-              "&language=" + lang;
+              "&language=" +
+              lang;
             all_search_href =
               all_search_href +
               encodeURIComponent(filter_name) +
               "&category_id=" +
               Math.abs(cat_id) +
-              "&language=" + lang;
+              "&language=" +
+              lang;
           } else {
             aero_search_href =
               aero_search_href +
               encodeURIComponent(filter_name) +
-              "&language=" + lang;
+              "&language=" +
+              lang;
             all_search_href =
               all_search_href +
               encodeURIComponent(filter_name) +
-              "&language=" + lang;
+              "&language=" +
+              lang;
           }
 
           let html = "<li>";

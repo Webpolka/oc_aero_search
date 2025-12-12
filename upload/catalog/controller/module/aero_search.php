@@ -36,7 +36,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 
 
     /*
-    * Universal language ID  
+    * Universal language ID  (RU, EN, FR )
     */
    private function resolveLanguageId(): int
     {
@@ -62,8 +62,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
     */
     public function search(): void
     {
-
-        $this->load->model('extension/aero_search/module/aero_search');
+      
         $this->load->language('extension/aero_search/module/aero_search');
 
         $settings = $this->model_setting_setting->getSetting('module_aero_search');
@@ -129,6 +128,7 @@ class AeroSearch extends \Opencart\System\Engine\Controller
 
                 // Получаем продукты с учетом языка                
                 $results = $this->model_catalog_product->getProducts($filter_data);
+
                 $search_result = $this->model_catalog_product->getTotalProducts($filter_data);
                 $image_width        = $this->config->get('module_aero_search_image_width') ? (int)$this->config->get('module_aero_search_image_width') : 0;
                 $image_height       = $this->config->get('module_aero_search_image_height') ? (int)$this->config->get('module_aero_search_image_height') : 0;
