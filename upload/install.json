@@ -1,0 +1,10 @@
+{
+  "name": "Aero Search",
+  "description": "Aero Search Ajax module for Opencart 4.1.0.3 Latest 2025 Dec. ",
+  "version": "1.0.0",
+  "author": "Weblegko",
+  "type": "module",
+  "category": "search",
+  "code": "aero_search",
+  "link": "https://weblegko.ru"  
+}

@@ -1,0 +1,208 @@
+{{ header }}{{ column_left }}
+<div id="content">
+
+	<div class="page-header">
+		<div class="container-fluid">
+
+			<div class="float-end">
+				<button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary">
+					<i class="fa fa-save"></i>
+				</button>
+
+				<a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-secondary">
+					<i class="fa fa-reply"></i>
+				</a>
+			</div>
+
+			<h1>{{ heading_title }}</h1>
+
+			<!-- ХЛЕБНЫЕ КРОШКИ — НЕ ТРОГАЕМ -->
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item">
+						<a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		{% if error_warning %}
+			<div class="alert alert-danger alert-dismissible fade show">
+				<i class="fa fa-exclamation-circle"></i>
+				{{ error_warning }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+			</div>
+		{% endif %}
+
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">
+					<i class="fa fa-pencil"></i>
+					{{ text_edit }}</h3>
+			</div>
+
+			<div class="card-body">
+
+				<form
+					action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module">
+
+					<!-- show_image -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-show-image">{{ entry_show_image }}</label>
+						<div class="col-sm-10">
+							<select name="module_aero_search_show_image" id="input-show-image" class="form-select">
+								<option value="1" {% if module_aero_search_show_image %} selected {% endif %}>{{ text_enabled }}</option>
+								<option value="0" {% if not module_aero_search_show_image %} selected {% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- show_price -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-show-price">{{ entry_show_price }}</label>
+						<div class="col-sm-10">
+							<select name="module_aero_search_show_price" id="input-show-price" class="form-select">
+								<option value="1" {% if module_aero_search_show_price %} selected {% endif %}>{{ text_enabled }}</option>
+								<option value="0" {% if not module_aero_search_show_price %} selected {% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- show_description -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-show-description">{{ entry_show_description }}</label>
+						<div class="col-sm-10">
+							<select name="module_aero_search_show_description" id="input-show-description" class="form-select">
+								<option value="1" {% if module_aero_search_show_description %} selected {% endif %}>{{ text_enabled }}</option>
+								<option value="0" {% if not module_aero_search_show_description %} selected {% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- show_add_button -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-show-add-button">{{ entry_show_add_button }}</label>
+						<div class="col-sm-10">
+							<select name="module_aero_search_show_add_button" id="input-show-add-button" class="form-select">
+								<option value="1" {% if module_aero_search_show_add_button %} selected {% endif %}>{{ text_enabled }}</option>
+								<option value="0" {% if not module_aero_search_show_add_button %} selected {% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- view_all_results (multi-language) -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label">
+							<span data-bs-toggle="tooltip" title="{{ help_view_all_results }}">{{ entry_view_all_results }}</span>
+						</label>
+
+						<div class="col-sm-10">
+							{% for language in languages %}
+								<div class="input-group mb-1">
+									<span class="input-group-text">
+										<img src="{{ language.flag_img }}" title="{{ language.name }}"/>
+									</span>
+
+									<input type="text" name="module_aero_search_view_all_results[{{ language.language_id }}][name]" value="{{ module_aero_search_view_all_results[language.language_id].name|default('') }}" placeholder="{{ text_view_all_results }}" class="form-control"/>
+								</div>
+
+								{% if error_view_all_results[language.language_id] is not null %}
+									<div class="text-danger">{{ error_view_all_results[language.language_id] }}</div>
+								{% endif %}
+							{% endfor %}
+
+						</div>
+					</div>
+
+					<!-- limit -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-limit">{{ entry_limit }}</label>
+						<div class="col-sm-10">
+							<input type="number" name="module_aero_search_limit" id="input-limit" value="{{ module_aero_search_limit }}" class="form-control"/>
+							{% if error_limit %}
+								<div class="text-danger">{{ error_limit }}</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- width -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-width">{{ entry_width }}</label>
+						<div class="col-sm-10">
+							<input type="number" name="module_aero_search_image_width" value="{{ module_aero_search_image_width }}" id="input-width" class="form-control"/>
+							{% if error_width %}
+								<div class="text-danger">{{ error_width }}</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- height -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="input-height">{{ entry_height }}</label>
+						<div class="col-sm-10">
+							<input type="number" name="module_aero_search_image_height" value="{{ module_aero_search_image_height }}" id="input-height" class="form-control"/>
+							{% if error_height %}
+								<div class="text-danger">{{ error_height }}</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- title_length -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label">
+							<span data-bs-toggle="tooltip" title="{{ help_length }}">{{ entry_title_length }}</span>
+						</label>
+						<div class="col-sm-10">
+							<input type="number" name="module_aero_search_title_length" value="{{ module_aero_search_title_length }}" id="input-title-length" class="form-control"/>
+							{% if error_title_length %}
+								<div class="text-danger">{{ error_title_length }}</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- description_length -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label">
+							<span data-bs-toggle="tooltip" title="{{ help_length }}">{{ entry_description_length }}</span>
+						</label>
+						<div class="col-sm-10">
+							<input type="number" name="module_aero_search_description_length" value="{{ module_aero_search_description_length }}" id="input-description-length" class="form-control"/>
+							{% if error_description_length %}
+								<div class="text-danger">{{ error_description_length }}</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- min_length -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label">{{ entry_min_length }}</label>
+						<div class="col-sm-10">
+							<input type="number" name="module_aero_search_min_length" value="{{ module_aero_search_min_length }}" id="input-min-length" class="form-control"/>
+							{% if error_min_length %}
+								<div class="text-danger">{{ error_min_length }}</div>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- status -->
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="module_aero_search_status" id="input-status" class="form-select">
+								<option value="1" {% if module_aero_search_status %} selected {% endif %}>{{ text_enabled }}</option>
+								<option value="0" {% if not module_aero_search_status %} selected {% endif %}>{{ text_disabled }}</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{{ footer }}
